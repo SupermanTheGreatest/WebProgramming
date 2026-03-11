@@ -1,0 +1,425 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>TrialBridge — Find Your Clinical Trial</title>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Outfit:wght@300;400;500;600&display=swap" rel="stylesheet"/>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --teal:        #2A9D8F;
+      --teal-dark:   #1F7A6E;
+      --coral:       #E76F51;
+      --amber:       #F4A261;
+      --bg:          #FAFAF8;
+      --surface:     #F4F1EC;
+      --border:      #E0DBD4;
+      --text:        #2D2D2D;
+      --muted:       #6B6560;
+      --success:     #4CAF82;
+      --info:        #5B9BD5;
+      --purple:      #7C6FD4;
+    }
+
+    body {
+      font-family: 'Outfit', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    /* NAV */
+    nav {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 20px 60px;
+      position: relative;
+      z-index: 10;
+    }
+    .logo {
+      font-family: 'DM Serif Display', serif;
+      font-size: 1.5rem;
+      color: var(--teal-dark);
+      letter-spacing: -0.02em;
+    }
+    .logo span { color: var(--coral); }
+    .nav-links {
+      display: flex;
+      gap: 32px;
+      list-style: none;
+    }
+    .nav-links a {
+      text-decoration: none;
+      color: var(--muted);
+      font-size: 0.9rem;
+      font-weight: 500;
+      transition: color 0.2s;
+    }
+    .nav-links a:hover { color: var(--teal); }
+    .nav-cta {
+      background: var(--teal);
+      color: white;
+      border: none;
+      padding: 10px 22px;
+      border-radius: 50px;
+      font-family: 'Outfit', sans-serif;
+      font-weight: 500;
+      font-size: 0.875rem;
+      cursor: pointer;
+      transition: background 0.2s, transform 0.15s;
+    }
+    .nav-cta:hover { background: var(--teal-dark); transform: translateY(-1px); }
+
+    /* HERO */
+    .hero {
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 40px 20px 80px;
+      min-height: calc(100vh - 80px);
+      text-align: center;
+      overflow: hidden;
+    }
+
+    /* subtle warm radial bg */
+    .hero::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(ellipse 60% 50% at 50% 30%, rgba(42,157,143,0.08) 0%, transparent 70%),
+        radial-gradient(ellipse 40% 40% at 20% 70%, rgba(244,162,97,0.07) 0%, transparent 60%),
+        radial-gradient(ellipse 30% 30% at 80% 60%, rgba(231,111,81,0.06) 0%, transparent 60%);
+      pointer-events: none;
+    }
+
+    /* dotted connector lines (SVG overlay) */
+    .connector-svg {
+      position: absolute;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      pointer-events: none;
+      z-index: 1;
+    }
+
+    /* floating cards grid */
+    .floating-cards {
+      position: relative;
+      width: 680px;
+      height: 280px;
+      z-index: 2;
+      margin-bottom: 40px;
+    }
+
+    .card {
+      position: absolute;
+      border-radius: 20px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 8px 32px rgba(0,0,0,0.10), 0 2px 8px rgba(0,0,0,0.06);
+      animation: float 4s ease-in-out infinite;
+    }
+
+    /* center card — checkmark */
+    .card-center {
+      width: 88px; height: 88px;
+      background: var(--teal);
+      left: 50%; top: 50%;
+      transform: translate(-50%, -50%);
+      animation: float 3.5s ease-in-out infinite;
+      z-index: 5;
+    }
+    .card-center svg { width: 40px; height: 40px; }
+
+    /* photo cards */
+    .card-photo {
+      width: 72px; height: 72px;
+      background: var(--surface);
+      border: 2px solid var(--border);
+      overflow: hidden;
+      padding: 0;
+    }
+    .card-photo img {
+      width: 100%; height: 100%;
+      object-fit: cover;
+    }
+    /* fallback avatar */
+    .avatar-placeholder {
+      width: 100%; height: 100%;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.8rem;
+    }
+
+    /* icon cards */
+    .card-icon {
+      width: 64px; height: 64px;
+      font-size: 1.5rem;
+    }
+
+    /* positions */
+    .card-1 { left: 2%;  top: 20%; animation-delay: 0s;    } /* left photo */
+    .card-2 { left: 18%; top: 2%;  animation-delay: 0.5s;  } /* top-left icon */
+    .card-3 { left: 18%; top: 58%; animation-delay: 1s;    } /* bottom-left icon */
+    .card-4 { right: 2%; top: 20%; animation-delay: 0.3s;  } /* right icon */
+    .card-5 { right: 2%; top: 58%; animation-delay: 0.8s;  } /* right-bottom */
+    .card-6 { right: 18%;top: 2%;  animation-delay: 1.2s;  } /* top-right icon */
+
+    /* card colors */
+    .card-yellow  { background: #FFD55A; }
+    .card-blue    { background: #5BC4F5; }
+    .card-coral   { background: var(--coral); }
+    .card-green   { background: var(--success); }
+    .card-white   { background: #FFFFFF; border: 1.5px solid var(--border); }
+
+    @keyframes float {
+      0%, 100% { transform: translateY(0px); }
+      50%       { transform: translateY(-10px); }
+    }
+    .card-center {
+      animation: floatCenter 3.5s ease-in-out infinite !important;
+    }
+    @keyframes floatCenter {
+      0%, 100% { transform: translate(-50%, -50%) translateY(0px); }
+      50%       { transform: translate(-50%, -50%) translateY(-10px); }
+    }
+
+    /* dot connector */
+    .dot {
+      position: absolute;
+      width: 7px; height: 7px;
+      border-radius: 50%;
+      background: var(--purple);
+      opacity: 0.5;
+      z-index: 3;
+    }
+    .dot-1 { left: 30%;  top: 14%; }
+    .dot-2 { left: 15%;  top: 46%; }
+    .dot-3 { right: 28%; top: 12%; }
+    .dot-4 { right: 15%; top: 44%; }
+
+    /* HEADLINE */
+    .hero-content { position: relative; z-index: 4; }
+
+    h1 {
+      font-family: 'DM Serif Display', serif;
+      font-size: clamp(2.8rem, 6vw, 4.2rem);
+      line-height: 1.1;
+      letter-spacing: -0.02em;
+      color: var(--text);
+      margin-bottom: 20px;
+      max-width: 640px;
+    }
+    h1 em {
+      font-style: italic;
+      color: var(--teal);
+    }
+
+    .hero-sub {
+      font-size: 1.05rem;
+      color: var(--muted);
+      font-weight: 400;
+      max-width: 460px;
+      line-height: 1.7;
+      margin: 0 auto 36px;
+    }
+
+    .hero-actions {
+      display: flex;
+      gap: 14px;
+      justify-content: center;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+
+    .btn-primary {
+      background: var(--coral);
+      color: white;
+      border: none;
+      padding: 15px 36px;
+      border-radius: 50px;
+      font-family: 'Outfit', sans-serif;
+      font-weight: 600;
+      font-size: 1rem;
+      cursor: pointer;
+      transition: background 0.2s, transform 0.15s, box-shadow 0.2s;
+      box-shadow: 0 4px 16px rgba(231,111,81,0.35);
+    }
+    .btn-primary:hover {
+      background: #d4613f;
+      transform: translateY(-2px);
+      box-shadow: 0 8px 24px rgba(231,111,81,0.4);
+    }
+
+    .btn-secondary {
+      background: transparent;
+      color: var(--teal-dark);
+      border: 1.5px solid var(--teal);
+      padding: 14px 28px;
+      border-radius: 50px;
+      font-family: 'Outfit', sans-serif;
+      font-weight: 500;
+      font-size: 0.95rem;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .btn-secondary:hover {
+      background: var(--teal);
+      color: white;
+      transform: translateY(-2px);
+    }
+
+    /* trust badges */
+    .trust-row {
+      display: flex;
+      gap: 24px;
+      justify-content: center;
+      margin-top: 44px;
+      flex-wrap: wrap;
+      z-index: 4;
+      position: relative;
+    }
+    .trust-badge {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 0.82rem;
+      color: var(--muted);
+      font-weight: 500;
+    }
+    .trust-badge .icon {
+      width: 28px; height: 28px;
+      border-radius: 8px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 0.9rem;
+    }
+    .icon-green  { background: rgba(76,175,130,0.15); color: var(--success); }
+    .icon-teal   { background: rgba(42,157,143,0.12); color: var(--teal); }
+    .icon-amber  { background: rgba(244,162,97,0.15); color: var(--amber); }
+
+    /* entrance animations */
+    .hero-content, .trust-row {
+      opacity: 0;
+      transform: translateY(24px);
+      animation: fadeUp 0.7s ease forwards;
+    }
+    .trust-row { animation-delay: 0.25s; }
+    .floating-cards { opacity: 0; animation: fadeIn 0.6s ease 0.1s forwards; }
+
+    @keyframes fadeUp {
+      to { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes fadeIn {
+      to { opacity: 1; }
+    }
+
+    /* connector lines drawn via SVG */
+    .line { stroke: #C5BEB8; stroke-width: 1; stroke-dasharray: 4 4; fill: none; }
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav>
+    <div class="logo">Trial<span>Bridge</span></div>
+    <ul class="nav-links">
+      <li><a href="#">Find Trials</a></li>
+      <li><a href="#">How It Works</a></li>
+      <li><a href="#">For Researchers</a></li>
+      <li><a href="#">About</a></li>
+    </ul>
+    <button class="nav-cta">Get Started</button>
+  </nav>
+
+  <!-- HERO -->
+  <section class="hero">
+
+    <!-- Floating cards constellation -->
+    <div class="floating-cards">
+
+      <!-- connector lines -->
+      <svg class="connector-svg" viewBox="0 0 680 280" preserveAspectRatio="none">
+        <line class="line" x1="85"  y1="84"  x2="290" y2="130"/>
+        <line class="line" x1="155" y1="20"  x2="290" y2="120"/>
+        <line class="line" x1="155" y1="178" x2="290" y2="155"/>
+        <line class="line" x1="594" y1="84"  x2="390" y2="130"/>
+        <line class="line" x1="530" y1="20"  x2="390" y2="120"/>
+        <line class="line" x1="530" y1="178" x2="390" y2="155"/>
+      </svg>
+
+      <!-- dots at junctions -->
+      <div class="dot dot-1"></div>
+      <div class="dot dot-2"></div>
+      <div class="dot dot-3"></div>
+      <div class="dot dot-4"></div>
+
+      <!-- CENTER card -->
+      <div class="card card-center">
+        <svg viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <circle cx="20" cy="20" r="18" stroke="white" stroke-width="2" opacity="0.4"/>
+          <polyline points="12,21 18,27 28,14" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </div>
+
+      <!-- LEFT PHOTO -->
+      <div class="card card-photo card-1">
+        <div class="avatar-placeholder">👩‍⚕️</div>
+      </div>
+
+      <!-- TOP-LEFT — lightbulb -->
+      <div class="card card-icon card-yellow card-2">💡</div>
+
+      <!-- BOTTOM-LEFT — heart/health -->
+      <div class="card card-icon card-blue card-3">🩺</div>
+
+      <!-- TOP-RIGHT — shield -->
+      <div class="card card-icon card-coral card-6" style="color:white;">🛡️</div>
+
+      <!-- RIGHT PHOTO -->
+      <div class="card card-photo card-4">
+        <div class="avatar-placeholder">🧑‍🔬</div>
+      </div>
+
+      <!-- BOTTOM-RIGHT — eyes/transparent -->
+      <div class="card card-icon card-white card-5">🔬</div>
+
+    </div>
+
+    <!-- Headline + CTA -->
+    <div class="hero-content">
+      <h1>Your health journey,<br/><em>matched</em> to research<br/>that needs you.</h1>
+      <p class="hero-sub">
+        TrialBridge connects patients with clinical trials and medical research studies — simply, safely, and on your terms.
+      </p>
+      <div class="hero-actions">
+        <button class="btn-primary">Find My Trial →</button>
+        <button class="btn-secondary">Learn How It Works</button>
+      </div>
+    </div>
+
+    <!-- Trust badges -->
+    <div class="trust-row">
+      <div class="trust-badge">
+        <div class="icon icon-green">✓</div>
+        HIPAA Compliant
+      </div>
+      <div class="trust-badge">
+        <div class="icon icon-teal">🔒</div>
+        Data Never Sold
+      </div>
+      <div class="trust-badge">
+        <div class="icon icon-amber">⭐</div>
+        10,000+ Patients Matched
+      </div>
+    </div>
+
+  </section>
+
+</body>
+</html>

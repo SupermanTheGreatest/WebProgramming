@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>TrialBridge — Find Your Clinical Trial</title>
+  <link rel="stylesheet" href="style.css"/>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav>
+    <div class="logo">Trial<span>Bridge</span></div>
+    <ul class="nav-links">
+      <li><a href="#">Find Trials</a></li>
+      <li><a href="how-it-works.html">How It Works</a></li>
+      <li><a href="for-researchers.html">For Researchers</a></li>
+      <li><a href="about.html">About</a></li>
+    </ul>
+    <button class="nav-cta">Get Started</button>
+  </nav>
+
+  <!-- HERO -->
+  <section class="hero">
+
+    <!-- Floating cards constellation -->
+    <div class="floating-cards">
+
+      <!-- connector lines -->
+      <svg class="connector-svg" viewBox="0 0 680 280" preserveAspectRatio="none">
+        <line class="line" x1="85"  y1="84"  x2="290" y2="130"/>
+        <line class="line" x1="155" y1="20"  x2="290" y2="120"/>
+        <line class="line" x1="155" y1="178" x2="290" y2="155"/>
+        <line class="line" x1="594" y1="84"  x2="390" y2="130"/>
+        <line class="line" x1="530" y1="20"  x2="390" y2="120"/>
+        <line class="line" x1="530" y1="178" x2="390" y2="155"/>
+      </svg>
+
+      <!-- dots at junctions -->
+      <div class="dot dot-1"></div>
+      <div class="dot dot-2"></div>
+      <div class="dot dot-3"></div>
+      <div class="dot dot-4"></div>
+
+      <!-- CENTER card -->
+      <div class="card card-center">
+        <svg viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <circle cx="20" cy="20" r="18" stroke="white" stroke-width="2" opacity="0.4"/>
+          <polyline points="12,21 18,27 28,14" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </div>
+
+      <!-- LEFT PHOTO -->
+      <div class="card card-photo card-1">
+        <div class="avatar-placeholder">👩‍⚕️</div>
+      </div>
+
+      <!-- TOP-LEFT — lightbulb -->
+      <div class="card card-icon card-yellow card-2">💡</div>
+
+      <!-- BOTTOM-LEFT — heart/health -->
+      <div class="card card-icon card-blue card-3">🩺</div>
+
+      <!-- TOP-RIGHT — shield -->
+      <div class="card card-icon card-coral card-6" style="color:white;">🛡️</div>
+
+      <!-- RIGHT PHOTO -->
+      <div class="card card-photo card-4">
+        <div class="avatar-placeholder">🧑‍🔬</div>
+      </div>
+
+      <!-- BOTTOM-RIGHT — eyes/transparent -->
+      <div class="card card-icon card-white card-5">🔬</div>
+
+    </div>
+
+    <!-- Headline + CTA -->
+    <div class="hero-content">
+      <h1>Your health journey,<br/><em>matched</em> to research<br/>that needs you.</h1>
+      <p class="hero-sub">
+        TrialBridge connects patients with clinical trials and medical research studies — simply, safely, and on your terms.
+      </p>
+      <div class="hero-actions">
+        <button class="btn-primary">Find My Trial →</button>
+        <button class="btn-secondary" onclick="window.location.href='how-it-works.html'">Learn How It Works</button>
+      </div>
+    </div>
+
+    <!-- Trust badges -->
+    <div class="trust-row">
+      <div class="trust-badge">
+        <div class="icon icon-green">✓</div>
+        HIPAA Compliant
+      </div>
+      <div class="trust-badge">
+        <div class="icon icon-teal">🔒</div>
+        Data Never Sold
+      </div>
+      <div class="trust-badge">
+        <div class="icon icon-amber">⭐</div>
+        10,000+ Patients Matched
+      </div>
+    </div>
+
+  </section>
+
+</body>
+</html>

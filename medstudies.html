@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>TrialBridge — Medical Studies</title>
+  <link rel="stylesheet" href="style.css"/>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav class="nav-fixed">
+    <a href="index.html" class="logo">Trial<span>Bridge</span></a>
+    <ul class="nav-links">
+      <li><a href="medstudies.html" style="color:var(--teal); font-weight:600;">Find Trials</a></li>
+      <li><a href="how-it-works.html">How It Works</a></li>
+      <li><a href="#">For Researchers</a></li>
+      <li><a href="about.html">About</a></li>
+    </ul>
+    <button class="nav-cta" onclick="window.location.href='index.html'">Get Started</button>
+  </nav>
+
+  <!-- PAGE HEADER -->
+  <div class="medstudies-header">
+    <div class="eyebrow">Research Repository</div>
+    <h1>Medical Studies by <em>Researchers</em></h1>
+    <p>Browse active, ongoing, and completed clinical studies submitted by verified researchers and institutions. Each study is reviewed before listing.</p>
+  </div>
+
+  <!-- FILTER BAR -->
+  <div class="studies-filter-bar reveal">
+    <div class="studies-count">Showing <span>3 studies</span> — more added as researchers upload</div>
+    <div class="filter-tags">
+      <button class="filter-tag active">All</button>
+      <button class="filter-tag">Recruiting</button>
+      <button class="filter-tag">Ongoing</button>
+      <button class="filter-tag">Completed</button>
+    </div>
+  </div>
+
+  <!-- STUDIES LIST -->
+  <div class="studies-list">
+
+    <!-- STUDY 1 -->
+    <div class="study-card reveal">
+      <div class="study-body">
+        <div class="study-category">🧬 Oncology</div>
+        <div class="study-name">Early Detection Biomarkers in Stage I Colorectal Cancer</div>
+        <div class="study-abstract">
+          This study investigates novel blood-based biomarkers for the early detection of colorectal cancer in asymptomatic adults aged 40–70. Participants undergo a single blood draw and optional colonoscopy follow-up over a 12-month observation period.
+        </div>
+        <div class="researcher-row">
+          <div class="researcher-avatar">👩‍🔬</div>
+          <div class="researcher-info">
+            <div class="researcher-name">Dr. Ananya Krishnamurthy</div>
+            <div class="researcher-meta">
+              <span>MD, DM Gastroenterology</span>
+              <span class="meta-dot"></span>
+              <span>AIIMS New Delhi</span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="study-aside">
+        <div class="study-status status-recruiting">● Recruiting</div>
+        <div class="study-year">Started 2024</div>
+        <a href="#" class="study-link">View Details →</a>
+      </div>
+    </div>
+
+    <!-- STUDY 2 -->
+    <div class="study-card reveal">
+      <div class="study-body">
+        <div class="study-category">🫀 Cardiology</div>
+        <div class="study-name">Remote Monitoring of Post-MI Patients via Wearable ECG Devices</div>
+        <div class="study-abstract">
+          A 6-month randomised controlled trial evaluating the clinical outcomes of continuous remote ECG monitoring in patients who have experienced a myocardial infarction in the past 90 days. Comparing standard care versus wearable-assisted follow-up.
+        </div>
+        <div class="researcher-row">
+          <div class="researcher-avatar">🧑‍⚕️</div>
+          <div class="researcher-info">
+            <div class="researcher-name">Dr. Rajiv Mehta</div>
+            <div class="researcher-meta">
+              <span>MBBS, DNB Cardiology</span>
+              <span class="meta-dot"></span>
+              <span>Kokilaben Dhirubhai Ambani Hospital, Mumbai</span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="study-aside">
+        <div class="study-status status-ongoing">● Ongoing</div>
+        <div class="study-year">Started 2023</div>
+        <a href="#" class="study-link">View Details →</a>
+      </div>
+    </div>
+
+    <!-- STUDY 3 -->
+    <div class="study-card reveal">
+      <div class="study-body">
+        <div class="study-category">🧠 Neurology</div>
+        <div class="study-name">Cognitive Decline Patterns in Urban Adults with Type 2 Diabetes</div>
+        <div class="study-abstract">
+          A cross-sectional observational study examining the relationship between glycaemic control and early cognitive decline in urban adults aged 50–75 with a Type 2 Diabetes diagnosis of more than 5 years. Includes neuropsychological testing and MRI imaging.
+        </div>
+        <div class="researcher-row">
+          <div class="researcher-avatar">👩‍⚕️</div>
+          <div class="researcher-info">
+            <div class="researcher-name">Dr. Sunita Rao</div>
+            <div class="researcher-meta">
+              <span>MD, DM Neurology</span>
+              <span class="meta-dot"></span>
+              <span>Tata Memorial Centre, Mumbai</span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="study-aside">
+        <div class="study-status status-completed">✓ Completed</div>
+        <div class="study-year">2021 – 2023</div>
+        <a href="#" class="study-link">View Details →</a>
+      </div>
+    </div>
+
+    <!-- PLACEHOLDER 1 -->
+    <div class="study-card placeholder reveal">
+      <div class="placeholder-inner">
+        <div class="placeholder-icon">🔬</div>
+        <div class="placeholder-title">Study Slot Available</div>
+        <div class="placeholder-sub">This space is reserved for a verified researcher. Studies submitted through the Researcher Portal will appear here once reviewed.</div>
+      </div>
+    </div>
+
+    <!-- PLACEHOLDER 2 -->
+    <div class="study-card placeholder reveal">
+      <div class="placeholder-inner">
+        <div class="placeholder-icon">📋</div>
+        <div class="placeholder-title">Awaiting Researcher Submission</div>
+        <div class="placeholder-sub">Are you a researcher with an active or upcoming study? Submit your research through the portal to be listed here.</div>
+      </div>
+    </div>
+
+  </div>
+
+  <script>
+    // Scroll reveal
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+    }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
+
+    document.querySelectorAll('.study-card, .reveal').forEach(el => observer.observe(el));
+
+    // Filter tabs (UI only — full filtering added when data is dynamic)
+    document.querySelectorAll('.filter-tag').forEach(btn => {
+      btn.addEventListener('click', () => {
+        document.querySelectorAll('.filter-tag').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+      });
+    });
+  </script>
+
+</body>
+</html>

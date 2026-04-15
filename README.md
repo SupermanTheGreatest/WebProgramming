@@ -188,23 +188,26 @@ Researchers see all their listed trials and can click into each one to view a ta
 
 ## Challenges Faced
 
-**1. Role-Based Routing on the Frontend**
-React Router does not natively prevent users from navigating to routes meant for the other role. We solved this by building a `ProtectedRoute` wrapper component that reads the authenticated user's role from AuthContext and redirects unauthorized visitors before the page renders.
+Problems we faced during the making of this project:
 
-**2. JWT Expiry and Silent Session Failures**
-Tokens expired after 24 hours, causing API calls to silently return 401 errors with no user feedback. We added an Axios response interceptor that detects 401 responses, clears the stale token from localStorage, and redirects to the login page with a descriptive toast notification.
+1. Designing:
+It took me around 2 days with 2-3 hours of work put in each day to design this the earliest pages like "index", "how it works" and "about", i did it in figma also with the use of coolors.co and dribble.com to put all of this in place. 
 
-**3. Dynamic Multi-Parameter Trial Filtering**
-Supporting simultaneous filtering by condition, phase, location, and status required MongoDB queries that changed shape depending on which filters were active. We built a query-builder utility in the backend controller that conditionally appends only the fields present in the request, keeping the logic clean and easily extendable.
+Shreyas and Darshana designed the rest of it together, since we were not proficient with Figma i did it on pen and paper in my leisure time, patched it up on photoshop and then we digitised it on Figma.
 
-**4. ClinicalTrials.gov API Data Normalization**
-The external API returns deeply nested JSON with inconsistent field naming across different trial records. We wrote a dedicated `normalizer.js` module that extracts only the fields we need and applies sensible defaults for missing or null values before inserting into our schema.
+2. Prototyping:
 
-**5. Responsive Layout for the Search and Filter UI**
-The side filter panel combined with the card grid collapsed poorly on tablet viewports, causing the panel to overlap content. We used Tailwind CSS responsive breakpoints to convert the layout into a slide-out drawer on `md` screens and below, preserving usability across all device sizes.
+We suffered decision fatigue in how and where to do stuff, animations, keyframes and such in our project, so we prototyped it using Antigravity, then built our web app side by side using pure html,css, js.
 
-**6. CORS Between Vite Dev Server and Express**
-During development, requests from Vite on port 5173 to Express on port 5000 were blocked by the browser's CORS policy. We configured Express's `cors` middleware with explicit allowed origins and added a proxy rule in `vite.config.js` so all `/api` requests are forwarded transparently during development.
+3. Backend integration:
+
+ At first we thought we'd do our backend on MongoDB, which would be done by Siddhant, but     we didnt put any work on the backend till the submission dates closed in (april 2026), so  he made the entire backend last minute on Supabase in under a day before submission date (16april).
+
+It failed repeatedly in the early 4-5 tests; login issues, registries werent being made, and it wasnt being linked to the front end properly.
+
+4. Styling problems:
+
+ Since we vibecoded in our html pages, there were inline css files in each html file, so we manually extracted the css into external CSS, which wasnt much of a challenge but still it was mild enough of a challenge to put in here.
 
 ---
 

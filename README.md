@@ -141,27 +141,27 @@ TrialBridge follows a **3-Tier MERN Stack Architecture**:
 
 **1. Landing Page**
 A welcoming hero section explaining TrialBridge's dual mission, with CTAs directing patients and researchers to their respective flows.
-```
+
 ![Landing page](assets/LandingPage.png)
-```
+
 
 **2. Register & Login**
 Users choose their role (Patient or Researcher) at sign-up. A JWT token is issued and stored upon successful login.
-```
+
 ![Login page](assets/LoginPage.png)
-```
+
 
 **3. Trial Search — Patient View**
 The core patient-facing interface. Filter panel on the left, scrollable trial cards on the right. Each card shows condition, phase, location, and a status badge.
-```
+
 ![Trail Search page](assets/TrialPage.png)
-```
+
 
 **4. Trial Detail Page**
 Clicking a trial opens a detailed view with eligibility criteria, the study description, and an Apply button that opens a confirmation modal.
-```
+
 ![Trail page](assets/Trial1Page.png)
-```
+
 
 **5. Patient Dashboard**
 Patients see all trials they have applied to, along with the current application status — Pending, Accepted, or Rejected.
@@ -171,9 +171,9 @@ Patients see all trials they have applied to, along with the current application
 
 **6. Post a Trial — Researcher**
 Researchers fill in a structured form to list a new clinical trial: title, condition, phase, location, eligibility criteria, and description.
-```
+
 ![Research page](assets/ForResearchPage.png)
-```
+
 
 **7. Researcher Dashboard**
 Researchers see all their listed trials and can click into each one to view a table of interested applicants.

@@ -1,11 +1,13 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-  <meta charset="UTF-8"/>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>TrialBridge — How It Works</title>
-  <link rel="stylesheet" href="style.css"/>
+  <link rel="stylesheet" href="style.css" />
 </head>
+
 <body>
 
   <!-- PROGRESS BAR -->
@@ -15,18 +17,19 @@
   <nav class="nav-fixed">
     <a href="index.html" class="logo">Trial<span>Bridge</span></a>
     <ul class="nav-links">
-      <li><a href="#">Find Trials</a></li>
+      <li><a href="find-trials.html">Find Trials</a></li>
       <li><a href="how-it-works.html" style="color:var(--teal); font-weight:600;">How It Works</a></li>
-      <li><a href="#">For Researchers</a></li>
+      <li><a href="for-researchers.html">For Researchers</a></li>
       <li><a href="about.html">About</a></li>
+      <li><a href="medstudies.html">Medical Studies</a></li>
     </ul>
-    <button class="nav-cta" onclick="window.location.href='index.html'">Get Started</button>
+    <button class="nav-cta" id="navCta" onclick="window.location.href='login.html'">Get Started</button>
   </nav>
 
   <!-- PAGE HEADER -->
   <div class="page-header">
     <div class="eyebrow">How It Works</div>
-    <h1>From signup to study —<br/><em>in five simple steps.</em></h1>
+    <h1>From signup to study —<br /><em>in five simple steps.</em></h1>
     <p>TrialBridge makes joining a clinical trial as easy as booking a doctor's appointment.</p>
   </div>
 
@@ -43,7 +46,8 @@
         <div class="step-icon-wrap" style="background:rgba(42,157,143,0.12);">🧑‍💼</div>
         <div class="step-number">Step 01</div>
         <div class="step-title">Create your health profile</div>
-        <div class="step-desc">Tell us about your age, conditions, current medications, and location. It takes under 5 minutes — no medical records needed upfront.</div>
+        <div class="step-desc">Tell us about your age, conditions, current medications, and location. It takes under 5
+          minutes — no medical records needed upfront.</div>
         <div class="step-tags">
           <span class="tag">5 min setup</span>
           <span class="tag">No uploads needed</span>
@@ -60,7 +64,8 @@
         <div class="step-icon-wrap" style="background:rgba(244,162,97,0.15);">🔍</div>
         <div class="step-number">Step 02</div>
         <div class="step-title">Get matched to trials</div>
-        <div class="step-desc">Our matching engine scans thousands of active studies from ClinicalTrials.gov and surfaces only the ones you're likely eligible for — ranked by relevance.</div>
+        <div class="step-desc">Our matching engine scans thousands of active studies from ClinicalTrials.gov and
+          surfaces only the ones you're likely eligible for — ranked by relevance.</div>
         <div class="step-tags">
           <span class="tag">AI-powered matching</span>
           <span class="tag">500+ active trials</span>
@@ -75,7 +80,8 @@
         <div class="step-icon-wrap" style="background:rgba(91,155,213,0.15);">📋</div>
         <div class="step-number">Step 03</div>
         <div class="step-title">Pre-screen in minutes</div>
-        <div class="step-desc">Answer a short guided questionnaire for each trial you're interested in. We'll tell you right away if you qualify — before anyone contacts you.</div>
+        <div class="step-desc">Answer a short guided questionnaire for each trial you're interested in. We'll tell you
+          right away if you qualify — before anyone contacts you.</div>
         <div class="step-tags">
           <span class="tag">Instant eligibility check</span>
           <span class="tag">No commitment</span>
@@ -92,7 +98,8 @@
         <div class="step-icon-wrap" style="background:rgba(76,175,130,0.15);">✍️</div>
         <div class="step-number">Step 04</div>
         <div class="step-title">Review & sign consent</div>
-        <div class="step-desc">Read a plain-language summary of the trial — what's involved, what risks exist, and what you'll receive. Sign digitally, and withdraw anytime with one click.</div>
+        <div class="step-desc">Read a plain-language summary of the trial — what's involved, what risks exist, and what
+          you'll receive. Sign digitally, and withdraw anytime with one click.</div>
         <div class="step-tags">
           <span class="tag">Plain-language summaries</span>
           <span class="tag">eConsent — FDA compliant</span>
@@ -107,7 +114,8 @@
         <div class="step-icon-wrap" style="background:rgba(231,111,81,0.12);">🏥</div>
         <div class="step-number">Step 05</div>
         <div class="step-title">Participate & track progress</div>
-        <div class="step-desc">Attend visits, log symptoms in your diary, and stay updated on your study progress — all from one place. Your coordinator is reachable in-app at any time.</div>
+        <div class="step-desc">Attend visits, log symptoms in your diary, and stay updated on your study progress — all
+          from one place. Your coordinator is reachable in-app at any time.</div>
         <div class="step-tags">
           <span class="tag">Symptom diary</span>
           <span class="tag">Visit reminders</span>
@@ -124,54 +132,11 @@
   <div class="final-cta" id="finalCta">
     <h2>Ready to find your <em>trial?</em></h2>
     <p>Join thousands of patients already contributing to the future of medicine.</p>
-    <button class="btn-primary" onclick="window.location.href='index.html'">Find My Trial →</button>
+    <button class="btn-primary" onclick="window.location.href='find-trials.html'">Find My Trial →</button>
   </div>
 
-  <script>
-    // ── Scroll progress bar ──
-    const progressBar = document.getElementById('progressBar');
-    const timelineFill = document.getElementById('timelineFill');
-    const finalCta = document.getElementById('finalCta');
-    const steps = document.querySelectorAll('.step');
-
-    function onScroll() {
-      const scrollTop = window.scrollY;
-      const docHeight = document.body.scrollHeight - window.innerHeight;
-      const pct = Math.min((scrollTop / docHeight) * 100, 100);
-      progressBar.style.width = pct + '%';
-
-      // animate steps with IntersectionObserver (handled below)
-      // timeline fill based on how many steps are visible
-      const visibleCount = document.querySelectorAll('.step.visible').length;
-      const fillPct = (visibleCount / steps.length) * 100;
-      timelineFill.style.height = fillPct + '%';
-    }
-
-    window.addEventListener('scroll', onScroll);
-
-    // ── IntersectionObserver for step reveals ──
-    const observer = new IntersectionObserver((entries) => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          entry.target.classList.add('visible');
-          // update timeline fill
-          const visibleCount = document.querySelectorAll('.step.visible').length;
-          timelineFill.style.height = ((visibleCount / steps.length) * 100) + '%';
-        }
-      });
-    }, {
-      threshold: 0.25,
-      rootMargin: '0px 0px -60px 0px'
-    });
-
-    steps.forEach(step => observer.observe(step));
-
-    // final CTA observer
-    const ctaObserver = new IntersectionObserver((entries) => {
-      entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
-    }, { threshold: 0.3 });
-    ctaObserver.observe(finalCta);
-  </script>
-
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2" defer></script>
+  <script src="main.js" defer></script>
 </body>
+
 </html>

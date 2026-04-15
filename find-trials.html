@@ -1,0 +1,502 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>TrialBridge — Find Trials</title>
+    <link rel="stylesheet" href="style.css" />
+    <style>
+        .find-trials-header {
+            padding: 140px 24px 60px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .find-trials-header::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background:
+                radial-gradient(ellipse 60% 50% at 50% 0%, rgba(42, 157, 143, 0.08) 0%, transparent 70%),
+                radial-gradient(ellipse 40% 40% at 80% 80%, rgba(244, 162, 97, 0.06) 0%, transparent 60%);
+            pointer-events: none;
+        }
+
+        .find-trials-header .eyebrow {
+            display: inline-block;
+            background: rgba(42, 157, 143, 0.1);
+            color: var(--teal-dark);
+            font-size: 0.78rem;
+            font-weight: 600;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            padding: 6px 16px;
+            border-radius: 50px;
+            border: 1px solid rgba(42, 157, 143, 0.2);
+            margin-bottom: 20px;
+        }
+
+        .find-trials-header h1 {
+            font-family: 'DM Serif Display', serif;
+            font-size: clamp(2.4rem, 5vw, 3.6rem);
+            line-height: 1.1;
+            letter-spacing: -0.02em;
+            max-width: 700px;
+            margin: 0 auto 18px;
+        }
+
+        .find-trials-header h1 em {
+            font-style: italic;
+            color: var(--coral);
+        }
+
+        .find-trials-header p {
+            font-size: 1rem;
+            color: var(--muted);
+            max-width: 500px;
+            margin: 0 auto;
+            line-height: 1.7;
+        }
+
+        /* Search */
+        .search-wrap {
+            max-width: 720px;
+            margin: 0 auto 56px;
+            padding: 0 24px;
+        }
+
+        .search-box {
+            display: flex;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.07);
+            border-radius: 50px;
+            background: white;
+            border: 1.5px solid var(--border);
+            padding: 6px;
+        }
+
+        .search-box input {
+            flex: 1;
+            border: none;
+            padding: 14px 22px;
+            font-size: 1rem;
+            font-family: 'Outfit', sans-serif;
+            color: var(--text);
+            outline: none;
+            background: transparent;
+        }
+
+        .search-box button {
+            background: var(--teal);
+            color: white;
+            border: none;
+            padding: 0 28px;
+            border-radius: 40px;
+            font-weight: 600;
+            font-family: 'Outfit', sans-serif;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+
+        .search-box button:hover {
+            background: var(--teal-dark);
+        }
+
+        /* Filter Bar */
+        .filter-bar {
+            max-width: 1100px;
+            margin: 0 auto 32px;
+            padding: 0 24px;
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+            align-items: center;
+        }
+
+        .filter-bar span {
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: var(--muted);
+            margin-right: 4px;
+        }
+
+        .filter-pill {
+            font-size: 0.8rem;
+            font-weight: 500;
+            padding: 7px 16px;
+            border-radius: 50px;
+            background: var(--surface);
+            border: 1.5px solid var(--border);
+            color: var(--muted);
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .filter-pill.active,
+        .filter-pill:hover {
+            background: var(--teal);
+            color: white;
+            border-color: var(--teal);
+        }
+
+        /* Grid */
+        .trials-grid {
+            max-width: 1100px;
+            margin: 0 auto 100px;
+            padding: 0 24px;
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+            gap: 24px;
+        }
+
+        .trial-card {
+            background: white;
+            border: 1.5px solid var(--border);
+            border-radius: 20px;
+            padding: 28px;
+            display: flex;
+            flex-direction: column;
+            gap: 14px;
+            opacity: 0;
+            transform: translateY(28px);
+            transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s;
+            animation: fadeUp 0.6s forwards;
+        }
+
+        .trial-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 16px 40px rgba(0, 0, 0, 0.08);
+            border-color: var(--teal);
+        }
+
+        @keyframes fadeUp {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .trial-badge {
+            align-self: flex-start;
+            font-size: 0.73rem;
+            font-weight: 600;
+            padding: 5px 12px;
+            border-radius: 50px;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        .badge-recruiting {
+            background: rgba(76, 175, 130, 0.13);
+            color: var(--success);
+            border: 1px solid rgba(76, 175, 130, 0.2);
+        }
+
+        .badge-review {
+            background: rgba(244, 162, 97, 0.13);
+            color: var(--amber);
+            border: 1px solid rgba(244, 162, 97, 0.2);
+        }
+
+        .badge-completed {
+            background: rgba(91, 155, 213, 0.13);
+            color: var(--info);
+            border: 1px solid rgba(91, 155, 213, 0.2);
+        }
+
+        .trial-card h3 {
+            font-family: 'DM Serif Display', serif;
+            font-size: 1.3rem;
+            line-height: 1.25;
+            letter-spacing: -0.01em;
+            color: var(--text);
+        }
+
+        .trial-card p {
+            font-size: 0.9rem;
+            color: var(--muted);
+            line-height: 1.65;
+        }
+
+        .trial-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 6px;
+        }
+
+        .trial-tag {
+            font-size: 0.73rem;
+            font-weight: 500;
+            padding: 4px 10px;
+            border-radius: 50px;
+            background: rgba(42, 157, 143, 0.08);
+            color: var(--teal-dark);
+            border: 1px solid rgba(42, 157, 143, 0.14);
+        }
+
+        .trial-meta {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            padding-top: 14px;
+            border-top: 1px solid var(--border);
+            margin-top: auto;
+            flex-wrap: wrap;
+        }
+
+        .meta-item {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            font-size: 0.83rem;
+            color: var(--muted);
+        }
+
+        .trial-cta {
+            margin-top: 8px;
+            align-self: flex-start;
+            background: var(--coral);
+            color: white;
+            border: none;
+            padding: 10px 22px;
+            border-radius: 50px;
+            font-family: 'Outfit', sans-serif;
+            font-weight: 600;
+            font-size: 0.875rem;
+            cursor: pointer;
+            transition: background 0.2s, transform 0.15s;
+            box-shadow: 0 3px 12px rgba(231, 111, 81, 0.28);
+        }
+
+        .trial-cta:hover {
+            background: #d4613f;
+            transform: translateY(-1px);
+        }
+    </style>
+</head>
+
+<body>
+    <!-- NAV -->
+    <div class="progress-bar" id="progressBar"></div>
+    <nav class="nav-fixed">
+        <a href="index.html" class="logo">Trial<span>Bridge</span></a>
+        <ul class="nav-links">
+            <li><a href="find-trials.html" style="color:var(--teal); font-weight:600;">Find Trials</a></li>
+            <li><a href="how-it-works.html">How It Works</a></li>
+            <li><a href="for-researchers.html">For Researchers</a></li>
+            <li><a href="about.html">About</a></li>
+            <li><a href="medstudies.html">Medical Studies</a></li>
+        </ul>
+        <button class="nav-cta" id="navCta" onclick="window.location.href='login.html'">Get Started</button>
+    </nav>
+
+    <!-- HEADER -->
+    <div class="find-trials-header">
+        <div class="eyebrow">Find Your Match</div>
+        <h1>Search <em>clinical trials</em> tailored to you.</h1>
+        <p>Browse actively recruiting medical trials near you. Click any trial to sign in and apply.</p>
+    </div>
+
+    <!-- SEARCH -->
+    <div class="search-wrap">
+        <div class="search-box">
+            <input type="text" id="trialSearch" placeholder="Search by condition, e.g. 'Asthma', 'Diabetes'…"
+                oninput="filterTrials()" />
+            <button onclick="filterTrials()">Search</button>
+        </div>
+    </div>
+
+    <!-- FILTER PILLS -->
+    <div class="filter-bar">
+        <span>Filter:</span>
+        <button class="filter-pill active" onclick="setFilter('All', this)">All</button>
+        <button class="filter-pill" onclick="setFilter('Recruiting', this)">● Recruiting</button>
+        <button class="filter-pill" onclick="setFilter('Under Review', this)">Under Review</button>
+        <button class="filter-pill" onclick="setFilter('Completed', this)">Completed</button>
+    </div>
+
+    <!-- TRIALS GRID -->
+    <div class="trials-grid" id="trialsGrid">
+
+        <div class="trial-card" data-status="Recruiting" data-keywords="diabetes type 2 glucose glycemic"
+            style="animation-delay:0.05s;">
+            <div class="trial-badge badge-recruiting">● Recruiting</div>
+            <h3>Advanced Therapies for Type 2 Diabetes</h3>
+            <p>A 12-month study assessing the efficacy of a novel once-weekly oral medication for adults struggling with
+                glycemic control despite existing medication.</p>
+            <div class="trial-tags"><span class="trial-tag">Ages 35–70</span><span
+                    class="trial-tag">Endocrinology</span><span class="trial-tag">12 months</span></div>
+            <div class="trial-meta">
+                <div class="meta-item">🏥 Apollo Hospitals</div>
+                <div class="meta-item">📍 Mumbai</div>
+            </div>
+            <button class="trial-cta" onclick="applyTrial('Apollo Diabetes Trial')">Apply Now →</button>
+        </div>
+
+        <div class="trial-card" data-status="Recruiting" data-keywords="asthma respiratory bronchial eosinophilic"
+            style="animation-delay:0.10s;">
+            <div class="trial-badge badge-recruiting">● Recruiting</div>
+            <h3>Novel Biologic for Severe Asthma</h3>
+            <p>Testing a breakthrough biologic injection for severe eosinophilic asthma. Designed for patients
+                unresponsive to standard inhalers across all severity grades.</p>
+            <div class="trial-tags"><span class="trial-tag">Ages 18–65</span><span
+                    class="trial-tag">Pulmonology</span><span class="trial-tag">9 months</span></div>
+            <div class="trial-meta">
+                <div class="meta-item">🏥 AIIMS</div>
+                <div class="meta-item">📍 New Delhi</div>
+            </div>
+            <button class="trial-cta" onclick="applyTrial('AIIMS Asthma Biologic')">Apply Now →</button>
+        </div>
+
+        <div class="trial-card" data-status="Recruiting" data-keywords="cancer colorectal biomarker oncology colon"
+            style="animation-delay:0.15s;">
+            <div class="trial-badge badge-recruiting">● Recruiting</div>
+            <h3>Early Detection Biomarkers in Colorectal Cancer</h3>
+            <p>Investigating novel blood-based biomarkers for early detection of colorectal cancer in asymptomatic
+                adults. Participants undergo a single blood draw and optional follow-up.</p>
+            <div class="trial-tags"><span class="trial-tag">Ages 40–70</span><span
+                    class="trial-tag">Oncology</span><span class="trial-tag">12 months</span></div>
+            <div class="trial-meta">
+                <div class="meta-item">🏥 AIIMS New Delhi</div>
+                <div class="meta-item">📍 New Delhi</div>
+            </div>
+            <button class="trial-cta" onclick="applyTrial('Colorectal Biomarker Study')">Apply Now →</button>
+        </div>
+
+        <div class="trial-card" data-status="Recruiting"
+            data-keywords="heart cardiology ECG wearable myocardial infarction" style="animation-delay:0.20s;">
+            <div class="trial-badge badge-recruiting">● Recruiting</div>
+            <h3>Wearable ECG Monitoring Post-MI</h3>
+            <p>Testing continuous remote ECG monitoring outcomes in post-myocardial infarction patients versus standard
+                care over a 6-month randomised, controlled trial.</p>
+            <div class="trial-tags"><span class="trial-tag">Ages 45–80</span><span
+                    class="trial-tag">Cardiology</span><span class="trial-tag">6 months</span></div>
+            <div class="trial-meta">
+                <div class="meta-item">🏥 Kokilaben Hospital</div>
+                <div class="meta-item">📍 Mumbai</div>
+            </div>
+            <button class="trial-cta" onclick="applyTrial('Kokilaben ECG Trial')">Apply Now →</button>
+        </div>
+
+        <div class="trial-card" data-status="Recruiting"
+            data-keywords="arthritis rheumatoid joint pain inflammation autoimmune" style="animation-delay:0.25s;">
+            <div class="trial-badge badge-recruiting">● Recruiting</div>
+            <h3>JAK Inhibitor Study for Rheumatoid Arthritis</h3>
+            <p>A 16-week study evaluating a new generation oral JAK inhibitor for moderate-to-severe rheumatoid
+                arthritis patients who have failed biologic therapies.</p>
+            <div class="trial-tags"><span class="trial-tag">Ages 25–75</span><span
+                    class="trial-tag">Rheumatology</span><span class="trial-tag">16 weeks</span></div>
+            <div class="trial-meta">
+                <div class="meta-item">🏥 Fortis Hospital</div>
+                <div class="meta-item">📍 Bengaluru</div>
+            </div>
+            <button class="trial-cta" onclick="applyTrial('Fortis Arthritis Trial')">Apply Now →</button>
+        </div>
+
+        <div class="trial-card" data-status="Recruiting"
+            data-keywords="depression mental health anxiety SSRI psychiatry" style="animation-delay:0.30s;">
+            <div class="trial-badge badge-recruiting">● Recruiting</div>
+            <h3>Next-Gen Antidepressant for Treatment-Resistant Depression</h3>
+            <p>Evaluating a novel fast-acting antidepressant in adults who have not responded adequately to at least two
+                prior antidepressant medications in the past 5 years.</p>
+            <div class="trial-tags"><span class="trial-tag">Ages 21–60</span><span
+                    class="trial-tag">Psychiatry</span><span class="trial-tag">24 weeks</span></div>
+            <div class="trial-meta">
+                <div class="meta-item">🏥 NIMHANS</div>
+                <div class="meta-item">📍 Bengaluru</div>
+            </div>
+            <button class="trial-cta" onclick="applyTrial('NIMHANS Depression Study')">Apply Now →</button>
+        </div>
+
+        <div class="trial-card" data-status="Recruiting" data-keywords="parkinson neuro brain tremor motor"
+            style="animation-delay:0.35s;">
+            <div class="trial-badge badge-recruiting">● Recruiting</div>
+            <h3>Neuroprotective Agent in Early Parkinson's Disease</h3>
+            <p>A 2-year study of an oral neuroprotective compound to slow disease progression in early Parkinson's
+                patients. No motor complications at entry required.</p>
+            <div class="trial-tags"><span class="trial-tag">Ages 50–80</span><span
+                    class="trial-tag">Neurology</span><span class="trial-tag">2 years</span></div>
+            <div class="trial-meta">
+                <div class="meta-item">🏥 Tata Memorial Centre</div>
+                <div class="meta-item">📍 Mumbai</div>
+            </div>
+            <button class="trial-cta" onclick="applyTrial('Parkinson Neuroprotective Study')">Apply Now →</button>
+        </div>
+
+        <div class="trial-card" data-status="Under Review" data-keywords="obesity weight bariatric metabolic surgery"
+            style="animation-delay:0.40s;">
+            <div class="trial-badge badge-review">● Under Review</div>
+            <h3>GLP-1 Dual Agonist for Metabolic Obesity</h3>
+            <p>Phase II study of a new subcutaneous GLP-1/GIP dual receptor agonist for significant weight reduction in
+                adults with BMI ≥30 and at least one metabolic comorbidity.</p>
+            <div class="trial-tags"><span class="trial-tag">Ages 30–65</span><span
+                    class="trial-tag">Endocrinology</span><span class="trial-tag">18 months</span></div>
+            <div class="trial-meta">
+                <div class="meta-item">🏥 Medanta</div>
+                <div class="meta-item">📍 Gurugram</div>
+            </div>
+            <button class="trial-cta" onclick="applyTrial('Medanta Obesity Study')">Apply Now →</button>
+        </div>
+
+        <div class="trial-card" data-status="Completed" data-keywords="diabetes cognitive decline memory brain type 2"
+            style="animation-delay:0.45s;">
+            <div class="trial-badge badge-completed">✓ Completed</div>
+            <h3>Cognitive Decline in Adults with Type 2 Diabetes</h3>
+            <p>Cross-sectional observational study examining the relationship between glycaemic control and early
+                cognitive decline in urban adults aged 50–75. Enrolled 312 participants.</p>
+            <div class="trial-tags"><span class="trial-tag">Ages 50–75</span><span
+                    class="trial-tag">Neurology</span><span class="trial-tag">2021–2023</span></div>
+            <div class="trial-meta">
+                <div class="meta-item">🏥 Tata Memorial Centre</div>
+                <div class="meta-item">📍 Mumbai</div>
+            </div>
+            <button class="trial-cta" onclick="applyTrial('Cognitive Decline Observational')">View Results →</button>
+        </div>
+
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2" defer></script>
+    <script src="main.js" defer></script>
+</body>
+
+</html>
+
+function setFilter(status, el) {
+activeFilter = status;
+document.querySelectorAll('.filter-pill').forEach(b => b.classList.remove('active'));
+el.classList.add('active');
+filterTrials();
+}
+
+function filterTrials() {
+const q = document.getElementById('trialSearch').value.toLowerCase();
+document.querySelectorAll('.trial-card').forEach(card => {
+const keywords = (card.dataset.keywords || '').toLowerCase() + ' ' + card.querySelector('h3').textContent.toLowerCase();
+const statusMatch = activeFilter === 'All' || card.dataset.status === activeFilter;
+const keywordMatch = !q || keywords.includes(q);
+card.style.display = (statusMatch && keywordMatch) ? '' : 'none';
+});
+}
+
+// Scroll progress bar
+const progressBar = document.getElementById('progressBar');
+window.addEventListener('scroll', () => {
+const pct = (window.scrollY / (document.body.scrollHeight - window.innerHeight)) * 100;
+progressBar.style.width = Math.min(pct, 100) + '%';
+});
+</script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script>
+    (async () => {
+        if (!window.supabase) return;
+        const sb = window.supabase.createClient('https://cflrajzjlphqacrjutcz.supabase.co', 'sb_publishable_tK-HD0ODb5LM0TWZKRS5wg_xVch6VYs');
+        const { data: { session } } = await sb.auth.getSession(); if (!session) return;
+        const u = session.user, name = u.user_metadata?.full_name || u.email.split('@')[0], init = name.charAt(0).toUpperCase();
+        const cta = document.getElementById('navCta'); if (!cta) return;
+        cta.outerHTML = `<div class="nav-profile" tabindex="0"><div class="nav-avatar">${init}</div><div class="nav-profile-dropdown"><div class="nav-profile-name">${name}</div><div class="nav-profile-email">${u.email}</div><a href="profile.html">View Profile</a><a href="#" class="signout-link" onclick="(async()=>{const s=window.supabase.createClient('https://cflrajzjlphqacrjutcz.supabase.co','sb_publishable_tK-HD0ODb5LM0TWZKRS5wg_xVch6VYs');await s.auth.signOut();window.location.reload();})();return false;">Sign Out</a></div></div>`;
+    })();
+</script>
+</body>
+
+</html>

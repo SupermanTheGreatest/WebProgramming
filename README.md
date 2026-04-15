@@ -142,7 +142,8 @@ TrialBridge follows a **3-Tier MERN Stack Architecture**:
 **1. Landing Page**
 A welcoming hero section explaining TrialBridge's dual mission, with CTAs directing patients and researchers to their respective flows.
 ```
-[SCREENSHOT: Landing Page with Hero Banner]
+<img width="1920" height="995" alt="image" src="https://github.com/user-attachments/assets/1069ed9b-9264-43fc-9530-1db489edf7c5" />
+
 ```
 
 **2. Register & Login**

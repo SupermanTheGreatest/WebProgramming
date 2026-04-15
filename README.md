@@ -2,7 +2,7 @@
 
 <img src="https://img.shields.io/badge/TrialBridge-v1.0.0-4F46E5?style=for-the-badge&logo=react" alt="TrialBridge"/>
 
-# 🧬 TrialBridge
+# TrialBridge
 
 ### *Bridging Groundbreaking Medical Research with the People Who Need It*
 
@@ -13,13 +13,13 @@
 [![License](https://img.shields.io/badge/License-MIT-blue?style=flat-square)](LICENSE)
 
 > **Semester 4 Mini Project — Web Programming**  
-> Thadomal Shahani Engineering College
+> Pillai College of Engineering
 
 </div>
 
 ---
 
-## 📋 Table of Contents
+## Table of Contents
 
 - [Overview](#-overview)
 - [Features](#-features)
@@ -31,16 +31,13 @@
 - [Team Contributions](#-team-contributions)
 - [Getting Started](#-getting-started)
 
----
-
-## 🔬 Overview
+## Overview
 
 **TrialBridge** is a modern, full-stack web platform designed to eliminate the friction between medical research and patient participation. Clinical trials are the backbone of medical progress — yet historically, connecting the right patients with the right trials has been a fragmented, jargon-heavy, and painfully manual process.
 
 TrialBridge solves this with a clean, dual-sided platform:
 
 | 👤 For Patients | 🏥 For Researchers |
-|---|---|
 | Discover active clinical trials using a simple, filter-driven search interface | List and manage clinical studies to accelerate participant recruitment |
 | Read plain-language summaries instead of dense medical PDFs | Connect directly with eligible, interested participants |
 | Register interest or apply with a single click | Track applicant details and study status from a dashboard |
@@ -50,27 +47,25 @@ TrialBridge solves this with a clean, dual-sided platform:
 
 ---
 
-## ✨ Features
+## Features
 
 ### Patient-Side
-- 🔍 **Smart Trial Search** — Filter by condition, phase, location, and eligibility criteria
-- 📄 **Plain-Language Summaries** — Medical jargon translated into readable descriptions
-- 📬 **One-Click Registration** — Express interest or apply directly from the trial card
-- 👤 **Patient Dashboard** — Track all applied and bookmarked trials in one place
-- 🔔 **Status Notifications** — Get updates on application and trial progress
+**Smart Trial Search** — Filter by condition, phase, location, and eligibility criteria
+**Plain-Language Summaries** — Medical jargon translated into readable descriptions
+**One-Click Registration** — Express interest or apply directly from the trial card
+**Patient Dashboard** — Track all applied and bookmarked trials in one place
+**Status Notifications** — Get updates on application and trial progress
 
 ### Researcher-Side
-- 📝 **Trial Listing Portal** — Create and publish clinical study profiles
-- 📊 **Applicant Management** — View and manage a list of interested participants
-- ✏️ **Edit & Update Studies** — Keep trial status (recruiting, completed, closed) current
-- 🔒 **Secure Researcher Authentication** — Role-based access control for investigators
+**Trial Listing Portal** — Create and publish clinical study profiles
+**Applicant Management** — View and manage a list of interested participants
+**Edit & Update Studies** — Keep trial status (recruiting, completed, closed) current
+**Secure Researcher Authentication** — Role-based access control for investigators
 
 ### Platform-Wide
-- 🌐 **Responsive Design** — Works seamlessly on desktop, tablet, and mobile
-- 🔐 **JWT Authentication** — Secure, token-based login for both user types
-- 🌙 **Dark / Light Mode** — Accessibility-focused theme toggle
-
----
+**Responsive Design** — Works seamlessly on desktop, tablet, and mobile
+**JWT Authentication** — Secure, token-based login for both user types
+**Dark / Light Mode** — Accessibility-focused theme toggle
 
 ## 🏗 Architecture & Design
 
@@ -108,57 +103,6 @@ TrialBridge follows a **3-Tier MERN Stack Architecture**:
 | **SPA** | React Router for client-side navigation |
 | **Component-Based UI** | Reusable React components across pages |
 | **Role-Based Access Control** | Middleware separates Patient vs Researcher permissions |
-
----
-
-## 🧩 Module Breakdown
-
-### Frontend (`/client`)
-
-```
-client/
-├── src/
-│   ├── components/         # Reusable UI components
-│   │   ├── Navbar.jsx
-│   │   ├── TrialCard.jsx
-│   │   ├── SearchBar.jsx
-│   │   ├── FilterPanel.jsx
-│   │   └── ApplicationModal.jsx
-│   ├── pages/              # Route-level page components
-│   │   ├── Home.jsx        # Landing page
-│   │   ├── TrialSearch.jsx # Patient search interface
-│   │   ├── TrialDetail.jsx # Individual trial page
-│   │   ├── Dashboard.jsx   # Patient/researcher dashboard
-│   │   ├── Login.jsx
-│   │   ├── Register.jsx
-│   │   └── PostTrial.jsx   # Researcher: create trial
-│   ├── context/            # React Context for global state
-│   │   └── AuthContext.jsx
-│   ├── hooks/              # Custom hooks
-│   └── utils/              # API call helpers (axios)
-```
-
-### Backend (`/server`)
-
-```
-server/
-├── controllers/
-│   ├── authController.js       # Register, login, JWT issue
-│   ├── trialController.js      # CRUD for clinical trials
-│   └── applicationController.js # Patient applications
-├── models/
-│   ├── User.js                 # Schema: patient & researcher
-│   ├── Trial.js                # Schema: clinical trial
-│   └── Application.js          # Schema: patient → trial link
-├── routes/
-│   ├── authRoutes.js
-│   ├── trialRoutes.js
-│   └── applicationRoutes.js
-├── middleware/
-│   ├── authMiddleware.js        # JWT verification
-│   └── roleMiddleware.js        # Role guard (patient/researcher)
-└── server.js                   # Entry point, Express setup
-```
 
 ### Database Schema Overview
 
@@ -203,10 +147,10 @@ server/
 
 ---
 
-## 🔌 APIs Used / Integrated
+## APIs Used / Integrated
 
 | API / Service | Purpose |
-|---|---|
+
 | **ClinicalTrials.gov API** | Seed real-world clinical trial data for demonstration; augments platform content |
 | **MongoDB Atlas** | Cloud-hosted NoSQL database with automatic scaling and backups |
 | **JWT (jsonwebtoken)** | Stateless authentication tokens for secure, role-based access |
@@ -218,7 +162,7 @@ server/
 ### Internal REST API Reference
 
 | Method | Endpoint | Auth | Description |
-|---|---|---|---|
+
 | `POST` | `/api/auth/register` | None | Register as patient or researcher |
 | `POST` | `/api/auth/login` | None | Login and receive JWT |
 | `GET` | `/api/trials` | None | List all active trials (supports filters) |
@@ -230,13 +174,12 @@ server/
 | `GET` | `/api/applications/my` | Patient | Get all of a patient's applications |
 | `GET` | `/api/applications/trial/:id` | Researcher | Get all applicants for a trial |
 
----
 
-## 📸 App Flow & Screenshots
+## App Flow & Screenshots
 
 > *(Screenshots are illustrative of the intended UI flow. Replace with actual screenshots before submission.)*
 
-### 1. 🏠 Landing Page
+### 1.Landing Page
 A welcoming hero section explaining TrialBridge's dual mission, with CTAs for patients and researchers.
 
 ```
@@ -245,7 +188,7 @@ A welcoming hero section explaining TrialBridge's dual mission, with CTAs for pa
 
 ---
 
-### 2. 🔐 Authentication — Register & Login
+### 2.Authentication — Register & Login
 Users choose their role (Patient or Researcher) at sign-up. JWT token stored in localStorage upon login.
 
 ```
@@ -255,7 +198,7 @@ Users choose their role (Patient or Researcher) at sign-up. JWT token stored in 
 
 ---
 
-### 3. 🔍 Trial Search (Patient View)
+### 3.Trial Search (Patient View)
 The core patient-facing interface. Filter panel on the left, scrollable trial cards on the right. Each card shows condition, phase, location, and status badge.
 
 ```
@@ -264,7 +207,7 @@ The core patient-facing interface. Filter panel on the left, scrollable trial ca
 
 ---
 
-### 4. 📋 Trial Detail Page
+### 4.Trial Detail Page
 Clicking a trial opens a detailed view with eligibility criteria, the study description, and an "Apply" button that opens a confirmation modal.
 
 ```
@@ -274,7 +217,7 @@ Clicking a trial opens a detailed view with eligibility criteria, the study desc
 
 ---
 
-### 5. 👤 Patient Dashboard
+### 5.Patient Dashboard
 Patients see all trials they've applied to, with current application status (Pending / Accepted / Rejected).
 
 ```
@@ -283,7 +226,7 @@ Patients see all trials they've applied to, with current application status (Pen
 
 ---
 
-### 6. 🏥 Researcher — Post a Trial
+### 6.Researcher — Post a Trial
 Researchers fill in a structured form to list a new clinical trial: title, condition, phase, location, eligibility criteria, and description.
 
 ```
@@ -292,17 +235,15 @@ Researchers fill in a structured form to list a new clinical trial: title, condi
 
 ---
 
-### 7. 📊 Researcher Dashboard
+### 7.Researcher Dashboard
 Researchers see all their listed trials and can click into each one to view a list of applicants with their details.
 
 ```
 [SCREENSHOT: Researcher Dashboard — Trial Management]
 [SCREENSHOT: Applicant List for a Trial]
-```
 
----
 
-## 🚧 Challenges Faced During Development
+## Challenges Faced During Development
 
 ### 1. Role-Based Routing on the Frontend
 **Challenge:** React Router doesn't natively support role-based protected routes. Sending a patient to a researcher-only page (and vice versa) was possible without extra logic.  
@@ -314,7 +255,6 @@ Researchers see all their listed trials and can click into each one to view a li
 **Challenge:** JWT tokens expired after 24h, causing silent failures on API calls. Users would hit a 401 error mid-session with no clear indication.  
 **Solution:** Added an Axios response interceptor that catches 401 responses, clears the stale token from localStorage, and redirects the user to the login page with a toast message.
 
----
 
 ### 3. Complex Trial Filtering with Multiple Parameters
 **Challenge:** Supporting simultaneous filtering by condition, phase, location, and status required dynamic MongoDB queries that could vary in their structure.  
@@ -404,7 +344,7 @@ Visit `http://localhost:5173` in your browser.
 
 <div align="center">
 
-Made with ❤️ by **Team TrialBridge**  
+Made  by **Team TrialBridge**  
 Semester 4 · Web Programming · 2025–26
 
 </div>

@@ -215,10 +215,10 @@ It failed repeatedly in the early 4-5 tests; login issues, registries werent bei
 
 | Team Member | Roll No. | Contributions |
 |---|---|---|
-| **Siddhant Vishe** | — | Project Lead, backend architecture, Auth module (JWT + bcrypt), Trial CRUD APIs, MongoDB schema design |
-| **Shreyas Sudarshana** | — | Frontend Lead, React component library, Trial Search and Filter UI, Patient Dashboard, routing and state management |
-| **Darshana Singh** | — | UI/UX design, Landing Page, responsive design (Tailwind CSS), Researcher portal (Post Trial form and Dashboard), Dark mode |
-| **Jatin Sanap** | — | API integration (ClinicalTrials.gov), Application module (backend and frontend), email notifications (Nodemailer), testing and deployment |
+| **Siddhant Vishe** | 466 | Project Lead, backend architecture, Auth module (JWT + bcrypt), Trial CRUD APIs, MongoDB schema design |
+| **Shreyas Sudarshana** | 460 | Frontend Lead, React component library, Trial Search and Filter UI, Patient Dashboard, routing and state management |
+| **Darshana Singh** | 461 | UI/UX design, Landing Page, responsive design (Tailwind CSS), Researcher portal (Post Trial form and Dashboard), Dark mode |
+| **Jatin Sanap** | 454 | API integration (ClinicalTrials.gov), Application module (backend and frontend), email notifications (Nodemailer), testing and deployment |
 
 *All four members collaborated on ideation, architecture decisions, code reviews, and documentation.*
 

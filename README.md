@@ -160,7 +160,7 @@ The core patient-facing interface. Filter panel on the left, scrollable trial ca
 **4. Trial Detail Page**
 Clicking a trial opens a detailed view with eligibility criteria, the study description, and an Apply button that opens a confirmation modal.
 
-![Trail page](assets/Trial1Page.png)
+![Trail page](assets/Trail1Page.png)
 
 **5. Post a Trial — Researcher**
 Researchers fill in a structured form to list a new clinical trial: title, condition, phase, location, eligibility criteria, and description.

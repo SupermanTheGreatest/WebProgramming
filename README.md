@@ -162,27 +162,11 @@ Clicking a trial opens a detailed view with eligibility criteria, the study desc
 
 ![Trail page](assets/Trial1Page.png)
 
-
-**5. Patient Dashboard**
-Patients see all trials they have applied to, along with the current application status — Pending, Accepted, or Rejected.
-```
-[SCREENSHOT: Patient Dashboard]
-```
-
-**6. Post a Trial — Researcher**
+**5. Post a Trial — Researcher**
 Researchers fill in a structured form to list a new clinical trial: title, condition, phase, location, eligibility criteria, and description.
 
 ![Research page](assets/ForResearchPage.png)
 
-
-**7. Researcher Dashboard**
-Researchers see all their listed trials and can click into each one to view a table of interested applicants.
-```
-[SCREENSHOT: Researcher Dashboard]
-[SCREENSHOT: Applicant List for a Trial]
-```
-
----
 
 ## Challenges Faced
 
